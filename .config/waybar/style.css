@@ -1,0 +1,111 @@
+/* HYPRLAND SYNCHRONIZED CYBERPUNK STYLES */
+
+/* --- GENERAL STYLES --- */
+* {
+    font-family: JetBrainsMono Nerd Font, FontAwesome, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 18px; /* Matching Hyprland Decoration rounding */
+    padding: 0 4px;
+    margin: 0;
+}
+
+window#waybar {
+    background-color: rgba(26, 31, 43, 0.96); 
+    color: #FFFFFF; 
+    border-radius: 18px;
+    border-bottom: 2px solid #FF007C; /* Primary Accent Border (Pink/Magenta) */
+}
+
+/* --- MODULE STYLES --- */
+
+#waybar .module {
+    padding: 0 8px;
+    border-right: 1px solid rgba(26, 31, 43, 0.9); 
+    background-color: transparent;
+}
+
+/* Media Player Module */
+#mpris {
+    background-color: #00E8FF; /* Cyan/Blue background for high visibility */
+    color: #fff;
+    padding: 0 12px;
+    border-radius: 18px;
+    margin-right: 6px;
+}
+#mpris.paused {
+    background-color: #8A00FF; /* Purple accent when paused */
+}
+
+
+/* Workspaces */
+#workspaces button {
+    padding: 0 5px;
+    background: transparent;
+    color: #FF007C; 
+    transition: none;
+}
+
+#workspaces button.active {
+    background: transparent;
+    color: #00E8FF;
+    border-radius: 00px; 
+    padding: 0 8px; 
+}
+
+/* Clock */
+#clock {
+    color: #00FF9C; 
+    background-color: rgba(26, 31, 43, 0.9);
+    padding: 0 16px;
+    border-radius: 18px; 
+}
+
+/* CPU, Memory, Updates */
+#cpu, #memory, #custom-updates {
+    color: #FFC800; 
+    padding: 0 10px;
+}
+
+/* Temperature */
+#temperature {
+    color: #FF007C; 
+    padding: 0 10px;
+}
+
+#temperature.critical {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    animation: blink 0.5s steps(1, start) infinite;
+}
+
+/* Network, Volume, Battery */
+#network, #pulseaudio, #battery {
+    color: #8A00FF; /* Consistent utility color (Purple Accent) */
+    padding: 0 10px;
+}
+
+/* Battery Charging/Critical */
+#battery.charging {
+    color: #FF007C; 
+}
+
+#battery.critical:not(.charging) {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    animation: blink 0.5s steps(1, start) infinite;
+}
+
+@keyframes blink {
+    to {
+        background-color: rgba(26, 31, 43, 0.9);
+        color: inherit;
+    }
+}
+
+/* Tray */
+#tray {
+    padding-right: 12px;
+    padding-left: 6px;
+    border: none;
+}

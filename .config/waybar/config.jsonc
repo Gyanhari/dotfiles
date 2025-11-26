@@ -1,0 +1,149 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "spacing": 6,
+    
+    // Left: Workspaces, Media Control (Focus/Navigation)
+    "modules-left": ["hyprland/workspaces", "mpris"],
+    
+    // Center: Clock/Date (Primary Information)
+    "modules-center": ["clock"],
+    
+    // Right: System Status & Utility Modules (Maximum Information)
+    "modules-right": [
+        "cpu", 
+        "memory", 
+        "temperature", 
+        "custom/updates", 
+        "pulseaudio", 
+        "network", 
+        "battery", 
+        "tray"
+    ],
+    
+    // --- MODULE CONFIGURATIONS ---
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "swap-icon-label": false,
+        "format-icons": {
+            "1": "一",
+            "2": "二",
+            "3": "三",
+            "4": "四",
+            "5": "五",
+            "6": "六",
+            "7": "七",
+            "8": "八",
+            "9": "九",
+            "10": "十",
+            "default": "󰮺"
+        },
+ 
+        "persistent-workspaces": {
+            "1": [], "2": [], "3": [], "4":[]
+        },
+        "on-click": "activate"
+    },
+    
+    // Media Player Control (MPRIS)
+    "mpris": {
+        "format": "💿 {status_icon} {title}",
+        "format-paused": "⏸️ {title}",
+        "format-stopped": "OFFLINE",
+        "player":"playerctld",
+        "format-icons": {
+            "Playing": "▶",
+            "Paused": "⏸",
+            "Stopped": "⏹"
+        },
+        "tooltip": true,
+        "tooltip-format": "{player}: {title} by {artist}",
+        "scroll-up": "previous",
+        "scroll-down": "next",
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl next",
+        "on-click-middle": "playerctl previous"
+    },
+
+
+    // Clock
+    "clock": {
+        "format": "TIME:{:%I:%M %p}",
+        "format-alt": "DATE:{:%Y-%m-%d}",
+        "tooltip-format": "<big>{:%A, %B %d}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    // CPU Usage
+    "cpu": {
+        "format": "CPU:{usage}%",
+        "interval": 2,
+        "max-length": 10,
+        "tooltip": true
+    },
+
+    // Memory Usage
+    "memory": {
+        "format": "RAM:{percentage}%",
+        "interval": 5,
+        "tooltip": true
+    },
+
+    // Temperature (Using safe default settings)
+    "temperature": {
+        "thermal-zone": 0, 
+        "format": "TEMP:{temperatureC}°C",
+        "critical-threshold": 80,
+        "format-critical": "🔥 TEMP:{temperatureC}°C",
+        "tooltip": true
+    },
+    
+    // System Updates (Using robust command)
+    "custom/updates": {
+        "format": "UPDATES:{updates}",
+        "exec": "sh -c 'updates=$(pacman -Qn | wc -l); printf \"%s\" \"$updates\"'",
+        "interval": 3600,
+        "format-icons": ["󰏖"]
+    },
+
+    // Volume Control (Enhanced Toggles and Icons)
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "tooltip": false,
+        "format-icons": {
+            "headset": "🎧", // Headset connected
+            "default": ["🔇", "🔈", "🔉", "🔊"] // Mute, Low, Medium, High
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle", // Click to MUTE/UNMUTE
+        "on-click-right": "pavucontrol", // Right-click to open volume mixer
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+    },
+
+    // Network Status (Enhanced Icons)
+    "network": {
+        "interface": "wlp2s0",
+        "format-wifi": " {essid}",
+        "format-ethernet": "󰈀 ETH",
+        "format-disconnected": "󰌙 OFFLINE", // New icon for disconnected
+        "tooltip-format-wifi": "Tx: {bandwidth:3} | Rx: {bandwidth:3}",
+        "on-click": "nm-connection-editor" // Click to open network manager
+    },
+
+    // Battery Status (Enhanced Icons)
+    "battery": {
+        "battery": "BAT1",
+        "format": "{icon} {percentage}%",
+        "format-icons": ["", "", "", "", ""],
+        "format-charging": "⚡ {percentage}%", // New icon for charging
+        "format-full": "🔋 FULL", // New icon for full
+        "tooltip": true,
+        "on-click": "upower -i /org/freedesktop/UPower/devices/battery_BAT0" // Click for detailed info
+    },
+    
+    // Tray (Used for nm-applet, blueman-applet)
+    "tray": {
+        "icon-size": 18,
+        "spacing": 5
+    }
+}
