@@ -1,0 +1,115 @@
+configuration {
+    modi: "drun,run,ssh";
+    show-icons: true;
+    display-drun: "EXEC >>";
+    display-run: "RUN >>";
+    display-ssh: "SSH >>";
+    icon-theme: "Qogir-dark";
+}
+
+* {
+    accent-pink: #FF007C;
+    accent-purple: #8A00FF;
+    accent-cyan: #00E8FF;
+    text-primary: #FFFFFF;
+    background-dark: #1A1F2B;
+    
+    glow-pink: rgba(255, 0, 124, 0.6);
+    glow-cyan: rgba(0, 232, 255, 0.6);
+    glow-purple: rgba(138, 0, 255, 0.6);
+    
+    font: "JetBrainsMono Nerd Font 13"; 
+    border-radius: 18px; 
+    
+    /* Disable default Rofi shadow to use custom box-shadow glow */
+    drop-shadow: false;
+}
+
+window {
+    background-color: @background-dark;
+    border: 2px;
+    border-color: @accent-cyan; /* Cyan outline */
+    padding: 15px;
+    width: 40%; 
+    height: 60%;
+    location: center;
+    anchor: center;
+    orientation: vertical;
+}
+
+mode-switcher {
+    border: 0;
+    margin: 0 0 10px 0;
+}
+
+button {
+    text-color: @text-primary;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 5px 12px;
+    font: "JetBrainsMono Nerd Font 13 bold";
+}
+
+button selected {
+    background-color: @accent-purple; /* Purple accent for the current mode tab */
+    text-color: @text-primary;
+    //box-shadow: 0 0 8px @glow-purple; /* Highlight active mode */
+}
+
+/* --- Input Prompt and Bar --- */
+inputbar {
+    background-color: @background-dark;
+    text-color: white;
+    padding: 12px;
+    border-radius: 18px;
+    margin: 0 0 15px 0;
+
+    border: 2px;
+    border-color: @accent-pink; /* Pink border */
+    //box-shadow: 0 0 10px 2px @glow-pink; /* Intense Pink glow on input */
+}
+
+prompt {
+    text-color: @accent-pink; /* Cyan for the prompt symbol/text */
+    margin-right: 10px;
+}
+
+/* --- List View --- */
+listview {
+    background-color: @background-dark;
+    columns: 1;
+    lines: 5; 
+    spacing: 5px;
+}
+
+element {
+    background-color: transparent;
+    text-color: @text-primary;
+    padding: 8px 10px;
+    border-radius: 10px;
+}
+
+/* --- Selected Element (The Core Cyberpunk Highlight) --- */
+element selected {
+    background-color: @accent-cyan; /* Switch to Cyan for high contrast selection */
+    text-color: @background-dark; 
+    //border: 1px solid @accent-pink; /* Pink outline for a duotone glitch look */
+    /*box-shadow: 
+        -2px 0 0 @accent-pink,    Glitch/Scanline shadow 1 (Pink) 
+        2px 0 0 @accent-purple,   Glitch/Scanline shadow 2 (Purple) 
+        0 0 15px 1px @glow-cyan;  Intense glow around the selection */
+}
+
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+element-icon {
+    size: 1.2em;
+    vertical-align: 0.5;
+    margin: 0 10px 0 0;
+}
+
+

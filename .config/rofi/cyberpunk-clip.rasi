@@ -1,0 +1,75 @@
+
+configuration {
+    modi: "drun"; 
+    show-icons: false;
+    icon-theme: "Qogir-dark";
+}
+
+* {
+    accent-pink: #FF007C;
+    accent-purple: #8A00FF;   
+    accent-cyan: #00E8FF;
+    text-primary: #FFFFFF;
+    background-dark: #1A1F2B;
+    
+    font: "JetBrainsMono Nerd Font 13"; 
+    border-radius: 18px; 
+}
+
+window {
+    background-color: @background-dark;
+    border: 3px;
+    border-color: @accent-purple;
+    padding: 15px;
+    width: 60%;
+    height: 40%;
+    location: center;
+    anchor: center;
+    orientation: vertical;
+}
+
+inputbar {
+    background-color: @background-dark;
+    text-color: #ffffff;
+    padding: 12px;
+    border-radius: 18px;
+    margin: 0 0 15px 0;
+    border: 2px;
+    border-color: @accent-cyan;
+}
+
+prompt {
+    text-color: @accent-pink;
+    margin-right: 10px;
+}
+
+listview {
+    background-color: @background-dark;
+    columns: 1;
+    lines: 8; 
+    spacing: 5px;
+}
+
+element {
+    background-color: transparent;
+    text-color: @text-primary;
+    padding: 8px 10px;
+    border-radius: 10px;
+}
+
+element selected {
+    background-color: @accent-pink;
+    text-color: @background-dark;
+}
+
+element-text { background-color: inherit; text-color: inherit; vertical-align: 0.5; }
+element-icon { size: 1.2em; vertical-align: 0.5; margin: 0 10px 0 0; }
+
+message {
+    background-color: white;
+    text-color: @accent-pink; /* Use the bright Pink accent for high visibility */
+    //border: 1px solid @accent-cyan;
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 5px;
+}
