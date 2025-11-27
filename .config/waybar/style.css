@@ -1,8 +1,6 @@
-/* HYPRLAND SYNCHRONIZED CYBERPUNK STYLES */
-
 /* --- GENERAL STYLES --- */
 * {
-    font-family: JetBrainsMono Nerd Font, FontAwesome, sans-serif;
+    font-family: Iosevka Nerd Font, JetBrainsMono Nerd Font, FontAwesome, sans-serif;
     font-size: 13px;
     font-weight: bold;
     border-radius: 18px; /* Matching Hyprland Decoration rounding */
@@ -46,10 +44,19 @@ window#waybar {
     transition: none;
 }
 
+#workspaces button:hover {
+    border: none;
+    box-shadow: inset 0 -3px transparent;
+}
+
+#workspaces button.focused:hover {
+    border: none;
+    box-shadow: none;
+}
+
 #workspaces button.active {
     background: transparent;
     color: #00E8FF;
-    border-radius: 00px; 
     padding: 0 8px; 
 }
 

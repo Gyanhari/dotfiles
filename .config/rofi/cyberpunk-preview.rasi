@@ -1,0 +1,100 @@
+/* Rofi configuration for wallpaper selection with image previews */
+
+configuration {
+    modi: "dmenu"; /* We're using dmenu mode for this script */
+    show-icons: true; /* IMPORTANT: Enable icons to show previews */
+    icon-theme: "Qogir-dark"; /* You can keep your existing icon theme for system icons,
+                                   but we will override for our wallpaper previews. */
+    // If you want to use the default 'Qogir-dark' for *all* icons and only show
+    // them where available (like for applications), you might want to remove
+    // the explicit `element-icon` styling below if it conflicts.
+    // For *this* use case (wallpaper previews), we explicitly want to show the image file.
+}
+
+* {
+    /* Inherit common variables from your other themes */
+    accent-pink: #FF007C;
+    accent-purple: #8A00FF;
+    accent-cyan: #00E8FF;
+    text-primary: #FFFFFF;
+    background-dark: #1A1F2B;
+    
+    glow-pink: rgba(255, 0, 124, 0.6);
+    glow-cyan: rgba(0, 232, 255, 0.6);
+    glow-purple: rgba(138, 0, 255, 0.6);
+    
+    font: "JetBrainsMono Nerd Font 13"; /* Your preferred font */
+    border-radius: 18px; /* Your preferred border-radius */
+    drop-shadow: false; /* Disable default Rofi shadow */
+}
+
+window {
+    background-color: @background-dark;
+    border: 3px;
+    border-color: @accent-cyan; /* Using cyan for the main window border */
+    padding: 15px;
+    width: 60%; /* Adjust width as needed for previews */
+    height: 70%; /* Adjust height to accommodate previews */
+    location: center;
+    anchor: center;
+    orientation: vertical;
+}
+
+inputbar {
+    background-color: @background-dark;
+    text-color: white;
+    padding: 12px;
+    border-radius: 18px;
+    margin: 0 0 15px 0;
+    border: 2px;
+    border-color: @accent-pink; /* Pink border for the input bar */
+}
+
+prompt {
+    text-color: @accent-pink; /* Pink for the prompt symbol/text */
+    margin-right: 10px;
+}
+
+listview {
+    background-color: @background-dark;
+    columns: 1;
+    lines: 5; /* More lines might be useful with larger previews */
+    spacing: 10px; /* Increased spacing to give previews room */
+}
+
+element {
+    background-color: transparent;
+    text-color: @text-primary;
+    padding: 8px 10px;
+    border-radius: 10px;
+}
+
+element selected {
+    background-color: @accent-cyan; /* Cyan for selected background */
+    text-color: @background-dark; /* Dark text on cyan */
+}
+
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+    vertical-align: 0.5;
+    margin: 0 0 0 10px; /* Add margin to separate text from icon */
+}
+
+element-icon {
+    size: 64px; /* Adjust thumbnail size as needed, e.g., 64px, 96px, 128px */
+    vertical-align: 0.5;
+    margin: 0 0px 0 0; /* No margin on the right to keep it close to the text */
+    background-color: transparent; /* Ensure icon background is transparent */
+    border-radius: 5px; /* Slightly rounded corners for the preview image */
+    border: 1px solid ; /* Subtle border for previews */
+}
+
+/* Optional: If you want a specific style for the message area (e.g., error messages) */
+message {
+    background-color: white;
+    text-color: @accent-pink;
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 5px;
+}

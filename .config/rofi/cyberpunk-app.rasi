@@ -18,7 +18,8 @@ configuration {
     glow-cyan: rgba(0, 232, 255, 0.6);
     glow-purple: rgba(138, 0, 255, 0.6);
     
-    font: "JetBrainsMono Nerd Font 13"; 
+    font: "Iosevka Nerd Font"; 
+
     border-radius: 18px; 
     
     /* Disable default Rofi shadow to use custom box-shadow glow */
