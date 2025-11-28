@@ -10,3 +10,4 @@ text/plain=nvim.desktop
 application/pdf=org.gnome.Evince.desktop
 inode/directory=thunar.desktop
 x-scheme-handler/file=thunar.desktop
+x-scheme-handler/viber=viber.desktop
