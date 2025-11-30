@@ -1,123 +1,98 @@
 #!/bin/bash
-
-# A simple script to control volume using 'wpctl' (for PipeWire/WirePlumber)
-# and send a notification using 'notify-send' (picked up by swaync).
-
-# Exit on error
-set -e
+set -euo pipefail  # safer bash
 
 # --- CONFIGURATION ---
 VOLUME_STEP="5%"
-MAX_VOLUME_LIMIT="1.5" # 1.5 = 150%.
-NOTIFICATION_ID=9910 # Reuses the same ID for updating the progress bar
-SINK_ID="@DEFAULT_AUDIO_SINK@" 
-# --- END CONFIGURATION ---
+MAX_VOLUME_LIMIT="1.5"    # 150% max
+NOTIFICATION_ID=9910
+SINK="@DEFAULT_SINK@"     # shorthand works with newer wpctl
 
-# Check if required commands exist
-if ! command -v wpctl &> /dev/null; then
-    echo "Error: wpctl command not found. Please ensure pipewire-utils is installed." >&2
-    exit 1
-fi
-if ! command -v notify-send &> /dev/null; then
-    echo "Error: notify-send command not found. Please ensure libnotify-bin is installed." >&2
-    exit 1
-fi
+# Dependencies check
+command -v wpctl     >/dev/null || { echo "Error: wpctl not found (pipewire/wireplumber)" >&2; exit 1; }
+command -v notify-send >/dev/null || { echo "Error: notify-send not found (libnotify-bin)" >&2; exit 1; }
 
-
-# Function to get the current volume and mute status robustly
-get_volume_status() {
+get_volume() {
     local info
-    
-    # Use the simplest, most stable command: wpctl get-volume SINK_ID
-    # This command always returns a string like: "Volume: 0.55" or "Volume: 0.55 [MUTED]"
-    info=$(wpctl get-volume $SINK_ID 2>/dev/null)
-    
-    # Fallback/Error check
-    if [ -z "$info" ]; then
-        echo "Error: wpctl failed to get volume information." >&2
-        VOLUME_PERC=0
-        MUTE_STATUS="no"
-        return
-    fi
-    
-    # 1. Extract the volume as a float (e.g., "0.55")
-    local volume_float
-    volume_float=$(echo "$info" | awk '{print $2}')
-    
-    # 2. Convert float volume to percentage integer (e.g., 0.55 -> 55)
-    # Uses bash's built-in arithmetic to handle the conversion
-    VOLUME_PERC=$(printf "%.0f\n" $(echo "$volume_float * 100" | bc))
+    info=$(wpctl get-volume "$SINK" 2>/dev/null) || { VOLUME=0; MUTED="yes"; return 1; }
 
-    # 3. Check for the MUTED tag
+    VOLUME_FLOAT=$(echo "$info" | awk '{print $2}')
+    VOLUME=$(printf "%.0f" "$(echo "$VOLUME_FLOAT * 100" | bc -l 2>/dev/null || echo 0)")
+
     if echo "$info" | grep -q '\[MUTED\]'; then
-        MUTE_STATUS="yes"
+        MUTED="yes"
     else
-        MUTE_STATUS="no"
+        MUTED="no"
     fi
-    
-    # Ensure VOLUME_PERC is a clean integer
-    if ! [[ "$VOLUME_PERC" =~ ^[0-9]+$ ]]; then
-        VOLUME_PERC=0
-    fi
+
+    # Safety: ensure VOLUME is a valid number
+    [[ $VOLUME =~ ^[0-9]+$ ]] || VOLUME=0
 }
 
-# Function to send a notification using notify-send
 send_notification() {
-    get_volume_status
-    
-    local icon_name
-    local message
+    get_volume
 
-    # VOLUME_PERC is already an integer
-    local volume_int=$((VOLUME_PERC))
-
-    if [[ "$MUTE_STATUS" == "yes" ]]; then
-        icon_name="audio-volume-muted"
+    local icon urgency
+    if [[ $MUTED == "yes" ]]; then
+        icon="audio-volume-muted"
         message="Muted"
-    elif (( volume_int == 0 )); then
-        icon_name="audio-volume-off"
-        message="Volume: ${volume_int}%"
-    elif (( volume_int < 33 )); then
-        icon_name="audio-volume-low"
-        message="Volume: ${volume_int}%"
-    elif (( volume_int < 66 )); then
-        icon_name="audio-volume-medium"
-        message="Volume: ${volume_int}%"
+        value=0
+        urgency="normal"
+    elif (( VOLUME == 0 )); then
+        icon="audio-volume-off"
+        message="Volume: ${VOLUME}%"
+        value=0
+        urgency="low"
+    elif (( VOLUME < 33 )); then
+        icon="audio-volume-low"
+        message="Volume: ${VOLUME}%"
+        value=$VOLUME
+        urgency="low"
+    elif (( VOLUME < 66 )); then
+        icon="audio-volume-medium"
+        message="Volume: ${VOLUME}%"
+        value=$VOLUME
+        urgency="low"
     else
-        icon_name="audio-volume-high"
-        message="Volume: ${volume_int}%"
+        icon="audio-volume-high"
+        message="Volume: ${VOLUME}%"
+        value=$VOLUME
+        urgency="normal"  # slightly more noticeable when loud
     fi
 
-    # Send the notification, using the same ID to update the previous one.
-    notify-send \
-        -i "$icon_name" \
-        -r "$NOTIFICATION_ID" \
-        -u low \
-        -h int:value:"$volume_int" \
-        "Volume" \
-        "$message"
+    # Use replace ID + progress bar
+    notify-send "Volume" "$message" \
+        -a "Volume Control" \
+        -i "$icon" \
+        -h "int:value:$value" \
+        -h "string:synchronous:volume" \
+        -u "$urgency" \
+        -t 1500 \
+        -r "$NOTIFICATION_ID"   # This replaces previous notification
 }
 
-case "$1" in
+case "${1:-}" in
     up)
-        # Increase volume, respecting the 150% limit
-        wpctl set-volume $SINK_ID "$VOLUME_STEP+" -- $MAX_VOLUME_LIMIT
+        wpctl set-volume "$SINK" "${VOLUME_STEP}+" --limit "$MAX_VOLUME_LIMIT"
         send_notification
         ;;
     down)
-        # Decrease volume
-        wpctl set-volume $SINK_ID "$VOLUME_STEP-"
+        wpctl set-volume "$SINK" "${VOLUME_STEP}-"
         send_notification
         ;;
     mute)
-        # Toggle mute status
-        wpctl set-mute $SINK_ID toggle
+        wpctl set-mute "$SINK" toggle
         send_notification
         ;;
+    "")
+        echo "Usage: $0 {up|down|mute}"
+        exit 1
+        ;;
     *)
+        echo "Invalid argument: $1"
         echo "Usage: $0 {up|down|mute}"
         exit 1
         ;;
 esac
 
 exit 0
+
