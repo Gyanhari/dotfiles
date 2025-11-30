@@ -24,7 +24,7 @@ alias mac="~/bin/mac"
 alias ipcheck="~/bin/ipinfo"
 alias myip="curl -s https://ipinfo.io/ip"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
+alias ccity="~/.config/hypr/scripts/continous_city.sh"
 
 source <(fzf --zsh)
 
@@ -37,3 +37,5 @@ setopt appendhistory
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/$USER/.local/share/flatpak/exports/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+export NO_COLOR=1
+

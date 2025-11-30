@@ -87,20 +87,56 @@ window#waybar {
 }
 
 /* Network, Volume, Battery */
-#network, #pulseaudio, #battery {
+#network, #pulseaudio{
     color: #8A00FF; /* Consistent utility color (Purple Accent) */
     padding: 0 10px;
 }
 
 /* Battery Charging/Critical */
-#battery.charging {
-    color: #FF007C; 
+/* ----- BATTERY MODULE STYLING ----- */
+#battery {
+    padding: 0 10px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background 0.3s, color 0.3s;
 }
 
-#battery.critical:not(.charging) {
-    background-color: #FF0000;
-    color: #FFFFFF;
-    animation: blink 0.5s steps(1, start) infinite;
+/* Normal */
+#battery.good {
+    color: #a6e3a1; /* green */
+}
+
+/* Medium */
+#battery.warning {
+    color: #f9e2af; /* yellow */
+}
+
+/* Low battery */
+#battery.critical {
+    color: #f38ba8; /* red */
+    animation: blink 1s infinite;
+}
+
+/* Charging */
+#battery.charging {
+    color: #89b4fa; /* blue */
+    animation: pulse 1.5s infinite;
+}
+
+/* FULL */
+#battery.full {
+    color: #94e2d5;
+}
+
+/* Animations */
+@keyframes blink {
+    50% { opacity: 0.2; }
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
 }
 
 @keyframes blink {
@@ -116,3 +152,16 @@ window#waybar {
     padding-left: 6px;
     border: none;
 }
+
+#power-profiles-daemon {
+  color: @a_orange;
+  font-family: "Adwaita Monospace";
+}
+
+#power-profiles-daemon {
+	font-size:18px;
+	color: @theme_text_color;
+	padding: 4px 10px;
+	margin:0;
+}
+

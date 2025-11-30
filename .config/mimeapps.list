@@ -11,3 +11,13 @@ application/pdf=org.gnome.Evince.desktop
 inode/directory=thunar.desktop
 x-scheme-handler/file=thunar.desktop
 x-scheme-handler/viber=viber.desktop
+video/mp4=vlc.desktop
+video/x-matroska=vlc.desktop
+video/x-msvideo=vlc.desktop
+video/webm=vlc.desktop
+application/x-mpegURL=vlc.desktop
+audio/mpeg=vlc.desktop
+audio/mp4=vlc.desktop
+audio/x-wav=vlc.desktop
+audio/flac=vlc.desktop
+

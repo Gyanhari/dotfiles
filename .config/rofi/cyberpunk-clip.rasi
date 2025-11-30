@@ -2,7 +2,6 @@
 configuration {
     modi: "drun"; 
     show-icons: false;
-    icon-theme: "Qogir-dark";
 }
 
 * {
@@ -30,7 +29,7 @@ window {
 
 inputbar {
     background-color: @background-dark;
-    text-color: #ffffff;
+    text-color: #E0E0E0;
     padding: 12px;
     border-radius: 18px;
     margin: 0 0 15px 0;
@@ -64,7 +63,6 @@ element selected {
 
 element-text { background-color: inherit; text-color: inherit; vertical-align: 0.5; }
 element-icon { size: 1.2em; vertical-align: 0.5; margin: 0 10px 0 0; }
-
 message {
     background-color: white;
     text-color: @accent-pink; /* Use the bright Pink accent for high visibility */
@@ -73,3 +71,4 @@ message {
     padding: 8px;
     margin-top: 5px;
 }
+

@@ -4,113 +4,128 @@ configuration {
     display-drun: "EXEC >>";
     display-run: "RUN >>";
     display-ssh: "SSH >>";
-    icon-theme: "Qogir-dark";
 }
 
 * {
-    accent-pink: #FF007C;
-    accent-purple: #8A00FF;
-    accent-cyan: #00E8FF;
-    text-primary: #FFFFFF;
-    background-dark: #1A1F2B;
-    
-    glow-pink: rgba(255, 0, 124, 0.6);
-    glow-cyan: rgba(0, 232, 255, 0.6);
-    glow-purple: rgba(138, 0, 255, 0.6);
-    
-    font: "Iosevka Nerd Font"; 
+    /* --- Cyberpunk Color Palette --- */
+    accent-neon-pink: #FF0099;     
+    accent-electric-purple: #A000FF;
+    accent-cyber-cyan: #00FFFF;    
+    text-primary-bright: #E0E0E0; 
+    text-secondary-dim: #888888; 
+    background-deep-dark: #0F121A;
+    background-console: #1E2533; 
+    border-glow-color: #00FFFF; 
 
-    border-radius: 18px; 
-    
-    /* Disable default Rofi shadow to use custom box-shadow glow */
-    drop-shadow: false;
+    /* --- Fonts --- */
+    font: "JetBrainsMono Nerd Font 14";
+    emoji-font: "Noto Color Emoji 14"; 
+
+    /* --- General Styling --- */
+    border-radius: 10px;            
+    drop-shadow: false;           
 }
 
 window {
-    background-color: @background-dark;
-    border: 2px;
-    border-color: @accent-cyan; /* Cyan outline */
-    padding: 15px;
-    width: 40%; 
-    height: 60%;
+    background-color: @background-deep-dark;
+    border: 3px;
+    border-color: @accent-electric-purple;
+    padding: 25px;                 
+    width: 700px;                 
+    height: 500px; 
     location: center;
     anchor: center;
     orientation: vertical;
 }
 
-mode-switcher {
-    border: 0;
-    margin: 0 0 10px 0;
-}
-
-button {
-    text-color: @text-primary;
-    background-color: transparent;
-    border-radius: 10px;
-    padding: 5px 12px;
-    font: "JetBrainsMono Nerd Font 13 bold";
-}
-
-button selected {
-    background-color: @accent-purple; /* Purple accent for the current mode tab */
-    text-color: @text-primary;
-    //box-shadow: 0 0 8px @glow-purple; /* Highlight active mode */
-}
-
-/* --- Input Prompt and Bar --- */
+/* --- Input Prompt and Bar (Search/Filter) --- */
 inputbar {
-    background-color: @background-dark;
-    text-color: white;
-    padding: 12px;
-    border-radius: 18px;
-    margin: 0 0 15px 0;
+    background-color: @background-console;
+    text-color: @text-primary-bright;
+    padding: 18px;                 /* Larger input bar */
+    border-radius: @border-radius;
+    margin: 0 0 25px 0;             /* More space below */
 
     border: 2px;
-    border-color: @accent-pink; /* Pink border */
-    //box-shadow: 0 0 10px 2px @glow-pink; /* Intense Pink glow on input */
+    border-color: @border-glow-color; /* Cyan glow effect for input */
 }
 
 prompt {
-    text-color: @accent-pink; /* Cyan for the prompt symbol/text */
-    margin-right: 10px;
+    text-color: @accent-neon-pink; /* Pink prompt */
+    margin-right: 15px;
+    font: "JetBrainsMono Nerd Font Bold 16"; /* Bolder, more prominent prompt */
 }
 
-/* --- List View --- */
+entry {
+    text-color: @text-primary-bright;
+    background-color: transparent;
+    placeholder: "Type to execute commands or search..."; /* A nice touch */
+    placeholder-color: @text-secondary-dim;
+}
+
 listview {
-    background-color: @background-dark;
+    background-color: transparent;
     columns: 1;
-    lines: 5; 
-    spacing: 5px;
+    lines: 1;
+    spacing: 12px;
+    fixed-height: false;
+    scrollbar: false;
+    border-color: @accent-electric-purple; /* Subtle border for listview area */
+    border: 0 0 0 0; 
+    margin: 0px;
+    padding: 0px;
 }
 
 element {
-    background-color: transparent;
-    text-color: @text-primary;
-    padding: 8px 10px;
-    border-radius: 10px;
+    background-color: @background-console; /* Console-like background for elements */
+    text-color: @text-primary-bright;
+    padding: 10px 8px;             /* Slightly less padding for more elements per row */
+    border-radius: 6px;            /* Sharper element corners */
+    font: @font;                   /* Use the main font */
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    border: 1px;                   /* Subtle border on elements */
+    border-color: @background-console; /* Match background by default */
 }
 
-/* --- Selected Element (The Core Cyberpunk Highlight) --- */
+/* --- Highlighted/Focused Element (Normal State) --- */
+element normal {
+    background-color: @background-console;
+    text-color: @text-primary-bright;
+    border-color: @background-console; /* Ensure normal elements don't show glow */
+}
+
+/* --- Selected Element (Highlight with Glow) --- */
 element selected {
-    background-color: @accent-cyan; /* Switch to Cyan for high contrast selection */
-    text-color: @background-dark; 
-    //border: 1px solid @accent-pink; /* Pink outline for a duotone glitch look */
-    /*box-shadow: 
-        -2px 0 0 @accent-pink,    Glitch/Scanline shadow 1 (Pink) 
-        2px 0 0 @accent-purple,   Glitch/Scanline shadow 2 (Purple) 
-        0 0 15px 1px @glow-cyan;  Intense glow around the selection */
+    background-color: @accent-electric-purple; /* Purple background for selected */
+    text-color: @background-deep-dark;      /* Dark text on bright background */
+    border: 2px;                            /* Thicker border for selected */
+    border-color: @border-glow-color;       /* Cyan glow for selection */
+    font: @font;
 }
 
 element-text {
     background-color: inherit;
     text-color: inherit;
+    font: inherit;
     vertical-align: 0.5;
+    horizontal-align: 0.5; /* Center element text */
 }
 
 element-icon {
-    size: 1.2em;
+    size: 1.5em; /* Larger icons */
     vertical-align: 0.5;
-    margin: 0 10px 0 0;
+    horizontal-align: 0.5;
+    margin: 0 5px 0 0; /* Space between icon and text */
+    background-color: transparent;
+    text-color: inherit;
 }
-
+message {
+    background-color: white;
+    text-color: @accent-neon-pink;
+    //border: 1px solid @accent-cyan;
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 5px;
+}
 

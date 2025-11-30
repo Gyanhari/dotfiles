@@ -12,13 +12,13 @@
     
     // Right: System Status & Utility Modules (Maximum Information)
     "modules-right": [
+        "custom/notification",
         "cpu", 
         "memory", 
         "temperature", 
-        "custom/updates", 
         "pulseaudio", 
-        "network", 
-        "battery", 
+        "network",  
+        "battery",
         "tray"
     ],
     
@@ -71,13 +71,27 @@
         "format-alt": "{:%A, %B %d, %Y}",
         "tooltip-format": "<big>{:%A, %B %d}</big>\n<tt><small>{calendar}</small></tt>"
     },
-    /* Clock
-    "clock": {
-        "format": "TIME:{:%I:%M %p}",
-        "format-alt": "DATE:{:%Y-%m-%d}",
-        "tooltip-format": "<big>{:%A, %B %d}</big>\n<tt><small>{calendar}</small></tt>"
-    },*/
 
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+	    "format-icons": {
+		    "notification": "<span foreground='#E5A50A'><sup></sup></span>",
+		    "none": "",
+		    "dnd-notification": "<span foreground='#E01B24'><sup></sup></span>",
+		    "dnd-none": "<span foreground='#444'><sup></sup></span>",
+		    "inhibited-notification": "<span foreground='#E01B24'><sup></sup></span>",
+		    "inhibited-none": "",
+		    "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+    	    "dnd-inhibited-none": "<span foreground='#444'><sup></sup></span>"
+        },
+    	    "return-type": "json",
+    	    "exec-if": "which swaync-client",
+    	    "exec": "swaync-client -swb",
+    	    "on-click": "swaync-client -t -sw",
+		    "on-click-right": "swaync-client -d -sw",
+		    "escape": true
+    },
     // CPU Usage
     "cpu": {
         "format": "CPU:{usage}%",
@@ -117,17 +131,10 @@
         "tooltip": false,
         "format-icons": {
             "headset": "🎧", 
-            // Using standard Font Awesome icons for visual volume tiers:
-            // 0% volume is handled by format-muted ()
-            // 1-33%:  (fa-volume-down)
-            // 34-66%:  (fa-volume-up)
-            // 67%+:  (fa-volume-up)
             "default": ["", "", "", ""] 
         },
-        // CLICK: Calls the script to toggle mute and send swaync notification
         "on-click": "~/.config/hypr/scripts/volume_control.sh mute", 
         "on-click-right": "pavucontrol", // Right-click to open volume mixer
-        // SCROLL: Calls the script to increase/decrease volume and send swaync notification
         "on-scroll-up": "~/.config/hypr/scripts/volume_control.sh up",
         "on-scroll-down": "~/.config/hypr/scripts/volume_control.sh down"
     },
@@ -142,20 +149,25 @@
         "on-click": "nm-connection-editor" // Click to open network manager
     },
 
-    // Battery Status (Enhanced Icons)
     "battery": {
-        "battery": "BAT1",
-        "format": "{icon} {percentage}%",
-        "format-icons": ["", "", "", "", ""],
-        "format-charging": "⚡ {percentage}%", // New icon for charging
-        "format-full": "🔋 FULL", // New icon for full
-        "tooltip": true,
-        "on-click": "upower -i /org/freedesktop/UPower/devices/battery_BAT0" // Click for detailed info
+	"format": "{capacity}% {icon}",
+	"format-charging": "{capacity}% ⚡",
+	"format-full": "🔋",
+	"format-plugged": "",
+	"format-icons": ["","","","",""],
+	"tooltip-format": "{capacity}% - {time}",
+    "states": {
+        "critical": 15,
+        "warning": 25,
+        "good": 80
+        }
+
     },
-    
     // Tray (Used for nm-applet, blueman-applet)
     "tray": {
         "icon-size": 18,
         "spacing": 5
     }
 }
+
+
