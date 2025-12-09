@@ -20,4 +20,9 @@ audio/mpeg=vlc.desktop
 audio/mp4=vlc.desktop
 audio/x-wav=vlc.desktop
 audio/flac=vlc.desktop
+x-scheme-handler/pttp=CiscoPacketTracerPtsa-9.0.0.desktop
+application/x-pka=CiscoPacketTracer-9.0.0.desktop
+application/x-pkt=CiscoPacketTracer-9.0.0.desktop
+application/x-pkz=CiscoPacketTracer-9.0.0.desktop
+application/x-pksz=CiscoPacketTracer-9.0.0.desktop
 

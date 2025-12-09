@@ -103,6 +103,7 @@
     // Memory Usage
     "memory": {
         "format": "RAM:{percentage}%",
+        "on-click": "kitty btop",
         "interval": 5,
         "tooltip": true
     },
