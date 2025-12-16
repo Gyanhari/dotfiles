@@ -1,2 +1,2 @@
 #!/bin/bash
-# --- DotFiles Install
+# --- DotFiles Dependencies Install
