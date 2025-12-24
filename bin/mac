@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+    echo "Usage: mac <MAC_ADDRESS>"
+    exit 1
+fi
+
+MAC=$(echo "$1" | tr '[:lower:]' '[:upper:]' | sed 's/[^A-F0-9]//g')
+if [ ${#MAC} -lt 6 ]; then
+    echo "Invalid MAC address."
+    exit 1
+fi
+
+# Fast lookup using macvendors.co
+RESPONSE=$(curl -s "https://api.macvendors.com/$MAC")
+
+if [ -z "$RESPONSE" ]; then
+    echo "Vendor not found or API unreachable."
+else
+    echo "$RESPONSE"
+fi
+

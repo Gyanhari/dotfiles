@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sshpass -p 'M@sal@22222' ssh my-server
