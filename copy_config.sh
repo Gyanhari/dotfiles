@@ -13,6 +13,7 @@ declare -a FILES_TO_LINK=(
 	".config/mimeapps.list" ".config/mimeapps.list"
 	".config/swappy" ".config/swappy"
 	".config/tmux" ".config/tmux"
+	"bin" "bin"
 )
 
 create_symlink(){
