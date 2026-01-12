@@ -31,7 +31,7 @@ alias mac="~/bin/mac"
 alias ipcheck="~/bin/ipinfo"
 alias myip="curl -s https://ipinfo.io/ip"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-alias ccity="~/.config/hypr/scripts/continous_city.sh"
+alias cfspd='cloudflare-speed-cli'
 
 source <(fzf --zsh)
 

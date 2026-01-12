@@ -8,7 +8,7 @@
     "modules-left": ["hyprland/workspaces", "mpris"],
     
     // Center: Clock/Date (Primary Information)
-    "modules-center": ["clock" ],
+    "modules-center": ["clock", "hyprland/window" ],
     
     // Right: System Status & Utility Modules (Maximum Information)
     "modules-right": [
@@ -22,6 +22,12 @@
         "tray"
     ],
     
+
+    "hyprland/window":{
+        "format": "{class}",
+        "seperate-outputs": true
+    },
+
     // --- MODULE CONFIGURATIONS ---
     "hyprland/workspaces": {
         "format": "{icon}",
