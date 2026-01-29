@@ -16,6 +16,8 @@ plugins=(
     zsh-syntax-highlighting
 )
 
+export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 source $ZSH/oh-my-zsh.sh
 
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/archlinux
@@ -27,11 +29,8 @@ alias lla='ls -la'
 alias lt='ls --tree'
 alias vim='nvim'
 alias logout='loginctl terminate-user'
-alias mac="~/bin/mac"
-alias ipcheck="~/bin/ipinfo"
 alias myip="curl -s https://ipinfo.io/ip"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-alias cfspd='cloudflare-speed-cli'
 
 source <(fzf --zsh)
 
@@ -52,4 +51,3 @@ export NO_COLOR=1
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - zsh)"
-
